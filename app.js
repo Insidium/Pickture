@@ -20,44 +20,18 @@ function updateInput(e) {
 	searchValue = e.target.value;
 }
 
-//async function for fetching curated images to display on load
-async function curatedPhotos() {
-	//declare a way to fetch curated list of photos and set it to fetch json objectsfrom url via GET method and our API key
-	const dataFetch = await fetch(
-		'https://api.pexels.com/v1/curated?per_page=15&page1',
-		{
-			method: 'GET',
-			headers: { Accept: 'application/json', Authorization: auth },
-		}
-	);
+async function fetchApi(url) {
+	//declare a way to fetch list of photos and set it to fetch json objects from url via GET method and our API key
+	const dataFetch = await fetch(url, {
+		method: 'GET',
+		headers: { Accept: 'application/json', Authorization: auth },
+	});
 	//save the data as json under data
 	const data = await dataFetch.json();
-	//loop over array of curated photos and for each photo:
-	data.photos.forEach((photo) => {
-		//create a div to house it
-		const galleryImg = document.createElement('div');
-		//add the class of 'gallery-img' for styling
-		galleryImg.classList.add('.gallery-img');
-		//add innerHTML to the div to display as the img itself and the name of the photographer
-		galleryImg.innerHTML = `<img src='${photo.src.large}'></img>
-    <p>${photo.photographer}</p>`;
-		//add the complete div to the gallery section
-		gallery.appendChild(galleryImg);
-	});
+	return data;
 }
 
-//async function for searching for photos, which takes in the query and:
-async function searchPhotos(query) {
-	//fetch results based on the query input
-	const dataFetch = await fetch(
-		`https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page1`,
-		{
-			method: 'GET',
-			headers: { Accept: 'application/json', Authorization: auth },
-		}
-	);
-	//save the data as json under data
-	const data = await dataFetch.json();
+async function getPictures(data) {
 	//loop over array of curated photos and for each photo:
 	data.photos.forEach((photo) => {
 		//create a div to house it
@@ -70,6 +44,26 @@ async function searchPhotos(query) {
 		//add the complete div to the gallery section
 		gallery.appendChild(galleryImg);
 	});
+}
+
+//async function for fetching curated images to display on load
+async function curatedPhotos() {
+	//assign data the fetched list of curated images via method in fetchApi function
+	const data = await fetchApi(
+		'https://api.pexels.com/v1/curated?per_page=15&page1'
+	);
+	//invoke getting pictures function
+	getPictures(data);
+}
+
+//async function for searching for photos, which takes in the query and:
+async function searchPhotos(query) {
+	//assign data the fetched list of queried images via method in fetchApi function
+	const data = await fetchApi(
+		`https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page1`
+	);
+	//invoke getting pictures function
+	getPictures(data);
 }
 
 //invoke the curated photos list
