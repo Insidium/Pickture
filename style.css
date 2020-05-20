@@ -68,10 +68,19 @@ span {
 
 .gallery-info a {
 	color: #aaabb8;
+	text-decoration: none;
 }
 
 .gallery-info a:hover {
 	color: #2e9cca;
+}
+
+.gallery-info p {
+	color: #2e9cca;
+}
+
+.gallery-info p:hover {
+	text-decoration: underline;
 }
 
 .gallery {
