@@ -3,6 +3,10 @@ const gallery = document.querySelector('.gallery');
 const searchInput = document.querySelector('.search-input');
 const form = document.querySelector('.search-form');
 let searchValue;
+const more = document.querySelector('.more');
+let page = 1;
+let fetchLink;
+let currentSearch;
 
 //Event Listeners
 
@@ -12,8 +16,13 @@ searchInput.addEventListener('input', updateInput);
 form.addEventListener('submit', (e) => {
 	//prevent form from clearing the value on refresh, causing network error
 	e.preventDefault();
+	//set current search to search value
+	currentSearch = searchValue;
+	//search for photos based on value
 	searchPhotos(searchValue);
 });
+//on clicking more btn, load more images below
+more.addEventListener('click', loadMore);
 
 //log event under searchValue variable as the entered text in the input
 function updateInput(e) {
@@ -31,7 +40,7 @@ async function fetchApi(url) {
 	return data;
 }
 
-async function getPictures(data) {
+async function generatePictures(data) {
 	//loop over array of curated photos and for each photo:
 	data.photos.forEach((photo) => {
 		//create a div to house it
@@ -51,26 +60,26 @@ async function getPictures(data) {
 	});
 }
 
-//async fetchcurated images to display on load
+//async fetch curated images to display on load
 async function curatedPhotos() {
+	//set fetchLink to curated API url
+	fetchLink = 'https://api.pexels.com/v1/curated?per_page=15&page1';
 	//assign data the fetched list of curated images via method in fetchApi function
-	const data = await fetchApi(
-		'https://api.pexels.com/v1/curated?per_page=15&page1'
-	);
+	const data = await fetchApi(fetchLink);
 	//invoke getting pictures function
-	getPictures(data);
+	generatePictures(data);
 }
 
 //async search for photos, which takes in the query and:
 async function searchPhotos(query) {
 	//invoke clear photos function
 	clear();
+	//set fetchLink to queried API url
+	fetchLink = `https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page1`;
 	//assign data the fetched list of queried images via method in fetchApi function
-	const data = await fetchApi(
-		`https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page1`
-	);
+	const data = await fetchApi(fetchLink);
 	//invoke getting pictures function
-	getPictures(data);
+	generatePictures(data);
 }
 
 //clear existing photos in gallery and input on new search
@@ -79,6 +88,22 @@ function clear() {
 	gallery.innerHTML = '';
 	//clear search input
 	searchInput.value = '';
+}
+
+//async load more images on more btn click
+async function loadMore() {
+	//increment page by 1
+	page++;
+	//if searching for images, load more related images to query
+	if (currentSearch) {
+		fetchLink = `https://api.pexels.com/v1/search?query=${currentSearch}+query&per_page=15&page=${page}`;
+		//else load more random curated images
+	} else {
+		fetchLink = `https://api.pexels.com/v1/curated?per_page=15&page=${page}`;
+	}
+	//retrieve data based on the fetch logic above
+	const data = await fetchApi(fetchLink);
+	generatePictures(data);
 }
 
 //invoke the curated photos list
