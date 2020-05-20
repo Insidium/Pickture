@@ -46,3 +46,14 @@ header h2 {
 	color: #f0ffff;
 	cursor: pointer;
 }
+
+.gallery-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #a9a9a9;
+}
+
+.gallery-info a {
+	color: #555454;
+}

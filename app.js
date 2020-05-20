@@ -38,15 +38,20 @@ async function getPictures(data) {
 		const galleryImg = document.createElement('div');
 		//add the class of 'gallery-img' for styling
 		galleryImg.classList.add('.gallery-img');
-		//add innerHTML to the div to display as the img itself and the name of the photographer
-		galleryImg.innerHTML = `<img src='${photo.src.large}'></img>
-  <p>${photo.photographer}</p>`;
+		//add innerHTML to the div to display as the name of the photographer, a dowload link for original size img and the img itself
+		galleryImg.innerHTML = `
+    <div class='gallery-info'>
+    <p>${photo.photographer}</p>
+    <a href='${photo.src.original}'>Download</a>
+    </div>
+    <img src='${photo.src.large}'></img>
+  `;
 		//add the complete div to the gallery section
 		gallery.appendChild(galleryImg);
 	});
 }
 
-//async function for fetching curated images to display on load
+//async fetchcurated images to display on load
 async function curatedPhotos() {
 	//assign data the fetched list of curated images via method in fetchApi function
 	const data = await fetchApi(
@@ -56,14 +61,24 @@ async function curatedPhotos() {
 	getPictures(data);
 }
 
-//async function for searching for photos, which takes in the query and:
+//async search for photos, which takes in the query and:
 async function searchPhotos(query) {
+	//invoke clear photos function
+	clear();
 	//assign data the fetched list of queried images via method in fetchApi function
 	const data = await fetchApi(
 		`https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page1`
 	);
 	//invoke getting pictures function
 	getPictures(data);
+}
+
+//clear existing photos in gallery and input on new search
+function clear() {
+	//clear gallery
+	gallery.innerHTML = '';
+	//clear search input
+	searchInput.value = '';
 }
 
 //invoke the curated photos list
