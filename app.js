@@ -12,6 +12,8 @@ let currentSearch;
 
 //listen for change to input based on entered value
 searchInput.addEventListener('input', updateInput);
+//clear input field on click
+searchInput.addEventListener('click', clearField);
 //listen for form submit and search for the value, running searchPhotos
 form.addEventListener('submit', (e) => {
 	//prevent form from clearing the value on refresh, causing network error
@@ -73,7 +75,7 @@ async function curatedPhotos() {
 //async search for photos, which takes in the query and:
 async function searchPhotos(query) {
 	//invoke clear photos function
-	clear();
+	clearGallery();
 	//set fetchLink to queried API url
 	fetchLink = `https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page1`;
 	//assign data the fetched list of queried images via method in fetchApi function
@@ -83,10 +85,12 @@ async function searchPhotos(query) {
 }
 
 //clear existing photos in gallery and input on new search
-function clear() {
+function clearGallery() {
 	//clear gallery
 	gallery.innerHTML = '';
-	//clear search input
+}
+
+function clearField() {
 	searchInput.value = '';
 }
 
