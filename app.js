@@ -37,7 +37,7 @@ async function getPictures(data) {
 		//create a div to house it
 		const galleryImg = document.createElement('div');
 		//add the class of 'gallery-img' for styling
-		galleryImg.classList.add('.gallery-img');
+		galleryImg.classList.add('gallery-img');
 		//add innerHTML to the div to display as the name of the photographer, a dowload link for original size img and the img itself
 		galleryImg.innerHTML = `
     <div class='gallery-info'>
