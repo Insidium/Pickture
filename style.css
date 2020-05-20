@@ -6,6 +6,7 @@
 
 body {
 	font-family: 'Ubuntu', sans-serif;
+	background: #25274d;
 }
 
 header {
@@ -16,13 +17,22 @@ header {
 	align-items: center;
 }
 
-header h2 {
-	padding: 2rem;
+header h1 {
+	padding: 1rem;
+}
+
+header h4 {
+	color: #aaabb8;
+}
+
+span {
+	color: #2e9cca;
 }
 
 #logo {
+	font-size: 4rem;
 	text-decoration: none;
-	color: #000;
+	color: #aaabb8;
 }
 
 .search-form {
@@ -35,15 +45,15 @@ header h2 {
 	padding: 0.5rem;
 	width: 100%;
 	border: none;
-	border: 2px solid #2533af;
+	border: 2px solid #2e9cca;
 }
 
 .search-form button {
 	border: none;
 	padding: 0.5rem;
 	font-size: 1rem;
-	background: #2533af;
-	color: #f0ffff;
+	background: #2e9cca;
+	color: #fff;
 	cursor: pointer;
 }
 
@@ -51,12 +61,16 @@ header h2 {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	color: #a9a9a9;
+	color: #2e9cca;
 	padding: 0.5rem 0rem;
 }
 
 .gallery-info a {
-	color: #555454;
+	color: #aaabb8;
+}
+
+.gallery-info a:hover {
+	color: #2e9cca;
 }
 
 .gallery {
@@ -73,6 +87,7 @@ header h2 {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	border: #aaabb8 3px solid;
 }
 
 .nav-btn {
@@ -84,8 +99,8 @@ header h2 {
 
 .more {
 	padding: 1rem 3rem;
-	background: #2533af;
-	color: #f0ffff;
+	background: #2e9cca;
+	color: #feffff;
 	border: none;
 	font-size: 1.2rem;
 	cursor: pointer;
