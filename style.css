@@ -32,7 +32,7 @@ span {
 #logo {
 	font-size: 4rem;
 	text-decoration: none;
-	color: #aaabb8;
+	color: #feffff;
 }
 
 .search-form {
@@ -44,6 +44,7 @@ span {
 	font-size: 2rem;
 	padding: 0.5rem;
 	width: 100%;
+	background: #feffff;
 	border: none;
 	border: 2px solid #2e9cca;
 }
@@ -53,7 +54,7 @@ span {
 	padding: 0.5rem;
 	font-size: 1rem;
 	background: #2e9cca;
-	color: #fff;
+	color: #feffff;
 	cursor: pointer;
 }
 
